@@ -1,0 +1,10 @@
+. r.load.dot hpcs/201402/04/base hpcs/exp/intel2016/01
+s.cc -DDEBUG -c c_baseio.c
+s.cc -c dummy.c
+s.f90 -DDEBUG -c f_baseio.F90
+s.f90 -o f_baseio_test f_baseio_test.F90 c_baseio.o dummy.o f_baseio.o
+./f_baseio_test
+
+TODO
+- test read and write in separate programs
+- test whether SCRATCH mode files are erased if program is interrupted
