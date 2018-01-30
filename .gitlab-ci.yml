@@ -1,8 +1,16 @@
+# Reference:
+# https://gitlab.com/gitlab-org/gitlab-ci-yml/blob/master/C++.gitlab-ci.yml
 before_script:
   - . r.load.dot hpco/tmp/eccc/201402/07/base main/opt/intelcomp/intelcomp-2016.1.156 rpn/libs/16.2
 
 build:
-  script: "cd rmnlib_development/primitives;make"
+  stage: build
+  script:
+   - "cd rmnlib_development/primitives;make"
+  artifacts:
+   - rmnlib_development/primitives/f_baseio_test
 
 test:
-  script: "cd rmnlib_development/primitives;ls;f_baseio_test"
+  stage: test
+  script:
+    - "cd rmnlib_development/primitives;ls;f_baseio_test"
