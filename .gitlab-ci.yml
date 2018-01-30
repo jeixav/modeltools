@@ -1,0 +1,8 @@
+before_script:
+  - . r.load.dot hpcs/201402/04/base hpcs/exp/intel2016/01
+
+build:
+  script: "cd rmnlib_development/primitives;make"
+
+test:
+  script: "f_baseio_test"
