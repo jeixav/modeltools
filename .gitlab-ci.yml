@@ -6,7 +6,7 @@ before_script:
 build:
   stage: build
   script:
-   - "cd rmnlib_development/primitives;make"
+   - "cd rmnlib_development/primitives;make CFLAGS=-g FFLAGS=-g"
   artifacts:
     paths:
       - rmnlib_development/primitives/f_baseio_test
@@ -14,4 +14,4 @@ build:
 test:
   stage: test
   script:
-    - "cd rmnlib_development/primitives;ls;./f_baseio_test"
+    - "cd rmnlib_development/primitives;ulimit -a;ls;./f_baseio_test"
