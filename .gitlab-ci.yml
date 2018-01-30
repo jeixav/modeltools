@@ -8,7 +8,8 @@ build:
   script:
    - "cd rmnlib_development/primitives;make"
   artifacts:
-   - rmnlib_development/primitives/f_baseio_test
+    paths:
+      - rmnlib_development/primitives/f_baseio_test
 
 test:
   stage: test
