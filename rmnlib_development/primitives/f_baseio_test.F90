@@ -33,33 +33,32 @@ program self_test
   iun1 = 0
   status = fnom(iun1,'./fortran_formatted','SEQ+FMT+FTN+APPEND',0)
   ! FIXME Abort if non-zero status
-  print *,'iun1 =',iun1,'fnom status =',status
+  print '("iun1 = ",I0,", fnom status = ",I0)', iun1,status
   write(iun1,*)'ceci est un test'
+  status = fclos(iun1)
+  print '("fclos(iun1) = ",I0)',status
 
   iun2 = 0
   status = fnom(iun2,'./fortran_unformatted','SEQ+UNF+FTN+APPEND',0)
-  print *,'iun2, fnom status =',iun2,status
+  print '("iun2 = ",I0,", fnom status = ",I0)', iun1,status
   write(iun2)(i,i=0,3)
+  status = fclos(iun2)
+  print '("fclos(iun2) = ",I0)',status
 
   iun3 = 0
   status = fnom(iun3,'fortran_d77','UNF+FTN+D77+SCRATCH',5)
-  print *,'iun3, fnom status =',iun3,status
+  print '("iun3 = ",I0,", fnom status = ",I0)', iun3,status
   buf = 1
   write(iun3,rec=1)buf
   buf = 2
   write(iun3,rec=2)buf
   call system("ls -l $TMPDIR")
-
-  status = fclos(iun1)
-  print *,'iun, fclos(iun1), status =',iun1,status
-  status = fclos(iun2)
-  print *,'iun, fclos(iun2), status =',iun2,status
   status = fclos(iun3)
-  print *,'iun, fclos(iun3), status =',iun3,status
+  print '("fclos(iun3) = ",I0)',status
 
   iun1 = 0
   status = fnom(iun1,'./fortran_wa','RND+SPARSE',0)
-  print *,'iun1, fnom status(wa) =',iun1,status
+  print '("iun1 = ",I0,", fnom status(wa) = ",I0)',iun1,status
   call waopen(iun1)
   buf = 1
   call wawrit(iun1,buf,1,4)
@@ -73,22 +72,27 @@ program self_test
   call waopen(iun1)
   nblks = numblks64(iun1)
   fsize = wasize64(iun1)
-  print *,'iun1(fortran_wa), numblks, fsize =',iun1,  nblks, fsize
+  print '("iun1(fortran_wa) = ",I0,", numblks = ",I0,", fsize = ",I0)',iun1, nblks, fsize
   call waclos(iun1)
+  ! FIXME Is fclose required after waclos?
+  status = fclos(iun1)
+  print '("fclos(iun1) = ",I0)',status
 
   iun2 = 0
   status = fnom(iun2,'./fortran_da','RND',0)
-  print *,'iun2, fnom status(da) =',iun2,status
+  print '("iun2 = ",I0,", fnom status(da) = ",I0)',iun2,status
   call openda(iun2)
   buf512 = 1
   call writda(iun2,buf512,1,1)
   buf512 = 2
   call writda(iun2,buf512,1,2)
   call closda(iun2)
+  status = fclos(iun2)
+  print '("fclos(iun2) = ",I0)',status
 
   iun3 = 0
   status = fnom(iun3,'./fortran_da','RND',0)
-  print *,'iun3, fnom status(da) =',iun3,status
+  print '("iun3 = ",I0,", fnom status(da) = ",I0)',iun3,status
   call waopen(iun3)
   errors = 0
   buf512 = 0
@@ -102,14 +106,14 @@ program self_test
   do i=1,512
      if(buf512(i) .ne. 2) errors = errors + 1
   enddo
-  print *,'iun3, errors(waread) =',iun3, errors
+  print '("iun3 = ",I0,", errors(waread) = ",I0)',iun3,errors
   call waclos(iun3)
   status = fclos(iun3)
-  print *,'iun3, fclos(iun3), status =',iun3,status
+  print '("fclos(iun3) = ",I0)',status
 
   iun3 = 0
   status = fnom(iun3,'./fortran_da','RND+OLD+R/O',0)
-  print *,'iun3, fnom status(da) =',iun3,status
+  print '("iun3 = ",I0,", fnom status(da) = ",I0)',iun3,status
   call openda(iun3)
   errors = 0
   buf512 = 0
@@ -124,12 +128,13 @@ program self_test
   enddo
   nblks = numblks(iun3)
   fsize = wasize(iun3)
-  print *,'iun3, errors(readda), numblks, fsize =',iun3, errors, nblks, fsize
+  print '("iun3 = ",I0,", errors(readda) = ",I0,", numblks = ",I0,", fsize = ",I0)',iun3,errors,nblks,fsize
   call closda(iun3)
+  ! FIXME Abort if non-zero return value
 
   iun3 = 0
   status = fnom(iun3,'./fortran_da','RND',0)
-  print *,'iun3, fnom status(da) =',iun3,status
+  print '("iun3 = ",I0,", fnom status(da) = ",I0)',iun3,status
   call waopen(iun3)
   errors = 0
   buf512 = 0
@@ -142,29 +147,23 @@ program self_test
   do i=1,512
      if(buf512(i) .ne. 2) errors = errors + 1
   enddo
-  print *,'iun3, errors =',iun3, errors
+  print '("errors = ",I0)',errors
   call waclos(iun3)
-
-  status = fclos(iun1)
-  print *,'iun1, fclos(iun1), status =',iun1,status
-  status = fclos(iun2)
-  print *,'iun2, fclos(iun2), status =',iun2,status
   status = fclos(iun3)
-  print *,'iun3, fclos(iun3), status =',iun3,status
+  print '("fclos(iun3) = ",I0)',status
 
   status = existe('./fortran_formatted')
-  print *,'existe(./fortran_formatted) =',status
+  print '("existe(./fortran_formatted) = ",I0)',status
   status = existe('./fortran_unformatted')
-  print *,'existe(./fortran_unformatted) =',status
+  print '("existe(./fortran_unformatted) = ",I0)',status
   status = existe('./fortran_da')
-  print *,'existe(./fortran_da) =',status
+  print '("existe(./fortran_da) = ",I0)',status
   status = existe('./fortran_wa')
-  print *,'existe(./fortran_wa) =',status
+  print '("existe(./fortran_wa) = ",I0)',status
   status = existe('./iepala')
-  print *,'existe(./iepala) =',status
+  print '("existe(./iepala) = ",I0)',status
 
 end program self_test
-#endif
 !
 ! iun        : if zero upon entry, fnom will find an appropriate unit number
 ! path       : file name (character string)
