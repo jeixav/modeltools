@@ -5,4 +5,4 @@ build:
   script: "cd rmnlib_development/primitives;make"
 
 test:
-  script: "f_baseio_test"
+  script: "cd rmnlib_development/primitives;ls;f_baseio_test"
