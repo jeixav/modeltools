@@ -14,4 +14,4 @@ build:
 test:
   stage: test
   script:
-    - "cd rmnlib_development/primitives;ls;f_baseio_test"
+    - "cd rmnlib_development/primitives;ls;./f_baseio_test"
