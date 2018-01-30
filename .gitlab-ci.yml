@@ -6,7 +6,7 @@ before_script:
 build:
   stage: build
   script:
-   - "cd rmnlib_development/primitives;make CFLAGS=-g FFLAGS=-g"
+   - "cd rmnlib_development/primitives;make CFLAGS=-debug FFLAGS=-debug"
   artifacts:
     paths:
       - rmnlib_development/primitives/f_baseio_test
