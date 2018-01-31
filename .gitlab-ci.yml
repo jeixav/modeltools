@@ -14,4 +14,6 @@ build:
 test:
   stage: test
   script:
-    - /home/kro001/rmnlib_development/primitives/f_baseio_test
+    - /home/kro001/projects/modeltools/rmnlib_development/primitives/f_baseio_test
+  tags:
+    - eccc-ppp2
