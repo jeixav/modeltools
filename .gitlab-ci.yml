@@ -14,4 +14,4 @@ build:
 test:
   stage: test
   script:
-    - "cd rmnlib_development/primitives;ulimit -a;ls;./f_baseio_test"
+    - /home/kro001/rmnlib_development/primitives/f_baseio_test
