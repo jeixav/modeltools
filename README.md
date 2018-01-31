@@ -4,4 +4,4 @@ Unit tests for FSTD2018 development
 ===================================
 
 The modeltools unit\_tests branch develops unit tests for the next version of RPN Standard Files, FSTD2018.
-See the rmnlib_development/primitives directory.
+See the [rmnlib\_development/primitives](rmnlib_development/primitives) directory.
