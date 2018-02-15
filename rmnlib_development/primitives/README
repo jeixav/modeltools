@@ -8,3 +8,11 @@ s.f90 -o f_baseio_test f_baseio_test.F90 c_baseio.o dummy.o f_baseio.o
 TODO
 - test read and write in separate programs
 - test whether SCRATCH mode files are erased if program is interrupted
+- compile with GCC
+  1. . r.load.dot hpcs/201402/04/base hpcs/compilers/gcc-5.1.0/gcc_5.1.0_ubuntu-14.04-amd64-64
+  2. export COMP_ARCH=gfortran
+  3. export EC_ARCH=$BASE_ARCH/$COMP_ARCH
+  4. export CPATH="/ssm/net/rpn/libs/16.2/all/include/Linux_x86-64_gfortran /ssm/net/rpn/libs/16.2/all/include"
+  5. s.use gcc as cc
+  6. export ARMNLIB=/ssm/net/rpn/libs/16.2/all
+  7. make -B CFLAGS=-Wall FFLAGS=-Wall
